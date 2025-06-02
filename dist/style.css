@@ -2,6 +2,7 @@ body {
   background-color: #2f3640;
   background-image: url(./stars-opacity.0979c1.svg);
   font-family: "Nunito", sans-serif;
+  min-width: 720px;
 }
 
 .queue-point-adjust-container {
