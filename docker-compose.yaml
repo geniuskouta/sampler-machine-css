@@ -1,0 +1,9 @@
+services:
+  sampler-machine-css:
+    build: .
+    ports:
+      - "8080:80"
+    volumes:
+      - ./dist:/usr/share/nginx/html
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    restart: unless-stopped

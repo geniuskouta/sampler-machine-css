@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AKAI MPC2000XL</title>
+  <link rel="stylesheet" href="reset.css" />
+  <link rel="stylesheet" href="global.css" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Roboto:wght@400;500&display=swap"
+    rel="stylesheet">
+</head>
+
+<body>
+  <div class="queue-point-adjust-container">
+    <div class="queue-point-adjust-meter" queue-point-adjust-meter style="width: 0px;">
+      <span class="queue-point-adjust-meter-key" queue-point-adjust-meter-key></span>
+    </div>
+    <input class="queue-point-adjust" type="range" queue-point-adjust step="0.01" />
+  </div>
+  <main class="container">
+    <div class="controller">
+      <div class="controller-content-a">
+        <div class="controller-content-display">
+          <div class="video-slot-container" player-container-id="player-a">
+            <!-- <div class="video-slot"></div> -->
+            <iframe class="video-slot" player-id="player-b" id="player-b" frameborder="0" allowfullscreen=""
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin" title="East Of Underground -  I Love You" width="320"
+              height="90" src="https://www.youtube.com/embed/seARsMwjbEU?si=AOUpF9DDAEX9Bjx9"></iframe>
+            <!-- <input class="video-slot-url" type="text" placeholder="paste youtube url" /> -->
+          </div>
+        </div>
+        <div class="controller-content">
+          <nav class="controller-content-volume">
+            <span class="volume-adjust-meter-label">Volume</span>
+            <div class="volume-adjust-meter">
+              <div class="volume-adjust-meter-indicator" style="bottom: 92px;"></div>
+            </div>
+            <input class="volume-adjust" type="range" queue-point-adjust step="0.01" />
+          </nav>
+          <div>
+            <div class="controller-content-speed">
+              <nav class="speed-button-list">
+                <div class="speed-button-container">
+                  <span class="speed-button-label">0.25x</span>
+                  <a class="speed-button"></a>
+                </div>
+                <div class="speed-button-container">
+                  <span class="speed-button-label">0.5x</span>
+                  <a class="speed-button"></a>
+                </div>
+                <div class="speed-button-container">
+                  <span class="speed-button-label">0.75x</span>
+                  <a class="speed-button"></a>
+                </div>
+                <div class="speed-button-container">
+                  <span class="speed-button-label">1x</span>
+                  <a class="speed-button"></a>
+                </div>
+              </nav>
+              <nav class="speed-button-list">
+                <div class="speed-button-container">
+                  <span class="speed-button-label">1.25x</span>
+                  <a class="speed-button"></a>
+                </div>
+                <div class="speed-button-container">
+                  <span class="speed-button-label">1.5x</span>
+                  <a class="speed-button"></a>
+                </div>
+                <div class="speed-button-container">
+                  <span class="speed-button-label">1.75x</span>
+                  <a class="speed-button"></a>
+                </div>
+                <div class="speed-button-container">
+                  <span class="speed-button-label">2x</span>
+                  <a class="speed-button"></a>
+                </div>
+              </nav>
+            </div>
+            <nav class="controller-content-track-functions">
+              <div class="track-button-container">
+                <span class="track-button-label">RECORD</span>
+                <a class="track-button track-record-button"></a>
+              </div>
+              <div class="track-button-container">
+                <span class="track-button-label">DELETE</span>
+                <a class="track-button track-delete-button"></a>
+              </div>
+              <div class="track-button-container">
+                <span class="track-button-label">STOP</span>
+                <a class="track-button"></a>
+              </div>
+              <div class="track-button-container">
+                <span class="track-button-label">PLAY</span>
+                <a class="track-button"></a>
+              </div>
+            </nav>
+          </div>
+        </div>
+      </div>
+      <div class="controller-content-b">
+        <div class="brand">
+          <span class="brand-text-company-name">NAKANO</span>
+          <span class="brand-text-model-name">
+            YT2000XL
+          </span>
+        </div>
+        <div class="controller-content-track">
+          <div class="track-button-container">
+            <span class="track-button-label">TRACK1</span>
+            <a class="track-button track-switch-button"></a>
+          </div>
+          <div class="track-button-container">
+            <span class="track-button-label">TRACK2</span>
+            <a class="track-button track-switch-button"></a>
+          </div>
+          <div class="track-button-container">
+            <span class="track-button-label">TRACK3</span>
+            <a class="track-button track-switch-button"></a>
+          </div>
+        </div>
+        <nav class="video-slot-sampler-keys" player-sampler-keys-id="player-a">
+          <a class="video-slot-sampler-key">a</a>
+          <a class="video-slot-sampler-key">s</a>
+          <a class="video-slot-sampler-key">d</a>
+          <a class="video-slot-sampler-key">f</a>
+          <a class="video-slot-sampler-key">g</a>
+          <a class="video-slot-sampler-key">h</a>
+          <a class="video-slot-sampler-key">j</a>
+          <a class="video-slot-sampler-key">k</a>
+          <a class="video-slot-sampler-key">l</a>
+        </nav>
+      </div>
+    </div>
+  </main>
+</body>
+
+</html>
