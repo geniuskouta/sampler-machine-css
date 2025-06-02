@@ -41,12 +41,11 @@ body {
 .container {
   margin-top: 60px;
   padding: 0 20px;
-  display: flex;
-  justify-content: center;
 }
 
 .controller {
   display: flex;
+  margin: 0 auto;
   width: 698px;
   justify-content: space-between;
   background: #dbd7cc;
