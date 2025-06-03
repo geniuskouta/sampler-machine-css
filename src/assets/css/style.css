@@ -35,3 +35,22 @@ body {
 .content-a-control-group-track-control-button-group-wrapper {
 	margin-top: 24px;
 }
+
+.content-b-brand {
+	display: flex;
+	width: 300px;
+	justify-content: space-between;
+	padding-right: 10px;
+}
+
+.content-b-brand-text-company-name {
+	color: #c37e8f;
+	font-size: 28px;
+	font-weight: bold;
+}
+
+.content-b-brand-text-model-name {
+	color: #97978f;
+	font-size: 26px;
+	font-weight: bold;
+}

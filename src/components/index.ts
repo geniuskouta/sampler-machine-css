@@ -6,3 +6,4 @@ import './delete-button/index.ts';
 import './stop-button/index.ts';
 import './start-button/index.ts';
 import './track-control-button-group/index.ts';
+import './video-player/index.ts';

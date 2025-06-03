@@ -7,13 +7,19 @@
 		<link rel="stylesheet" href="./src/assets/css/reset.css" />
 		<link rel="stylesheet" href="./src/assets/css/global.css" />
 		<link rel="stylesheet" href="./src/assets/css/style.css" />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&amp;family=Roboto:wght@400;500&amp;display=swap"
+			rel="stylesheet"
+		/>
 		<script type="module" src="./src/components/index.ts"></script>
 	</head>
 	<body>
 		<main class="container">
 			<div class="controller">
 				<div class="content-a">
-					<div class="content-a-display"></div>
+					<div class="content-a-display">
+						<video-player></video-player>
+					</div>
 					<div class="content-a-control-group">
 						<volume-adjust></volume-adjust>
 						<div>
@@ -26,7 +32,16 @@
 						</div>
 					</div>
 				</div>
-				<div class="content-b"></div>
+				<div class="content-b">
+					<div class="content-b-brand">
+						<span class="content-b-brand-text-company-name"
+							>NAKANO</span
+						>
+						<span class="content-b-brand-text-model-name">
+							YT2000XL
+						</span>
+					</div>
+				</div>
 			</div>
 		</main>
 	</body>
