@@ -7,3 +7,5 @@ import './stop-button/index.ts';
 import './start-button/index.ts';
 import './track-control-button-group/index.ts';
 import './video-player/index.ts';
+import './track-switch-button/index.ts';
+import './track-switch-button-group/index.ts';
