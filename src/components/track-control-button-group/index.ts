@@ -3,27 +3,19 @@ import { customElement, property } from 'lit/decorators.js';
 import { resetStyles, globalStyles } from '../../styles';
 import { componentStyles } from './index.style';
 
-@customElement('volume-adjust')
-export class VolumeAdjust extends LitElement {
+@customElement('track-control-button-group')
+export class TrackControlButtonGroup extends LitElement {
 	@property({ type: Number }) count = 0;
 
 	render(): TemplateResult {
 		return html`
-			<nav class="controller-content-volume">
-				<span class="volume-adjust-meter-label">Volume</span>
-				<div class="volume-adjust-meter">
-					<div
-						class="volume-adjust-meter-indicator"
-						style="bottom: 92px;"
-					></div>
-				</div>
-				<input
-					class="volume-adjust"
-					type="range"
-					step="0.01"
-				/>
+			<nav class="controller-content-track-functions">
+				<record-button></record-button>
+				<delete-button></delete-button>
+				<stop-button></stop-button>
+				<start-button></start-button>
 			</nav>
-		`;
+    `;
 	}
 
 	static styles = [
@@ -35,6 +27,6 @@ export class VolumeAdjust extends LitElement {
 
 declare global {
 	interface HTMLElementTagNameMap {
-		'volume-adjust': VolumeAdjust;
+		'track-control-button-group': TrackControlButtonGroup;
 	}
 }

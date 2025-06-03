@@ -1,0 +1,8 @@
+import './volume-adjust/index.ts';
+import './speed-adjust-button/index.ts';
+import './speed-adjust-button-group/index.ts';
+import './record-button/index.ts';
+import './delete-button/index.ts';
+import './stop-button/index.ts';
+import './start-button/index.ts';
+import './track-control-button-group/index.ts';

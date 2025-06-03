@@ -2,17 +2,32 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<link rel="icon" type="image/svg+xml" href="/vite.svg" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Vite + Lit + TS</title>
+		<title>AKAI MPC2000XL</title>
 		<link rel="stylesheet" href="./src/assets/css/reset.css" />
 		<link rel="stylesheet" href="./src/assets/css/global.css" />
-		<script
-			type="module"
-			src="/src/components/volume-adjust/index.ts"
-		></script>
+		<link rel="stylesheet" href="./src/assets/css/style.css" />
+		<script type="module" src="./src/components/index.ts"></script>
 	</head>
 	<body>
-		<volume-adjust />
+		<main class="container">
+			<div class="controller">
+				<div class="content-a">
+					<div class="content-a-display"></div>
+					<div class="content-a-control-group">
+						<volume-adjust></volume-adjust>
+						<div>
+							<speed-adjust-button-group></speed-adjust-button-group>
+							<div
+								class="content-a-control-group-track-control-button-group-wrapper"
+							>
+								<track-control-button-group></track-control-button-group>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="content-b"></div>
+			</div>
+		</main>
 	</body>
 </html>
