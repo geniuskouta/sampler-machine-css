@@ -1,27 +1,55 @@
 import { LitElement, html, type TemplateResult } from 'lit';
-import { customElement, state, property } from 'lit/decorators.js';
+import { customElement, state } from 'lit/decorators.js';
 import { resetStyles, globalStyles } from '../../styles';
 import { componentStyles } from './index.style';
 import { KeyboardEventManager } from '../../event-managers';
+import { VideoPlayerController } from '../../reactive-controllers';
 
 @customElement('track-control-button-group')
 export class TrackControlButtonGroup extends LitElement {
-	@property({ type: Boolean }) isPlaying = false;
+
+	private videoPlayerController = VideoPlayerController.getInstance(this);
 
 	@state()
 	private activeKey: string | null = null;
 
-	private onKey = (key: string, type: 'down' | 'up') => {
-		if (type === 'down') this.activeKey = key;
-		else this.activeKey = null;
+	@state()
+	private isPlaying: boolean = false;
+
+	private onKey = async (key: string, type: 'down' | 'up') => {
+		if (type === 'down') {
+			this.activeKey = key;
+			await this.toggleVideoBySpaceKey(key);
+		} else {
+			this.activeKey = null;
+		}
 	};
+
+	async toggleVideoBySpaceKey(key: string): Promise<void> {
+		if (key === ' ') {
+			const currentPlayer = this.videoPlayerController.getCurrentPlayer();
+			if (!currentPlayer) return;
+
+			const isCurrentlyPlaying = await this.videoPlayerController.getIsPlaying(currentPlayer);
+
+			if (isCurrentlyPlaying) {
+				await currentPlayer.pauseVideo();
+			} else {
+				await currentPlayer.playVideo();
+			}
+
+			this.isPlaying = isCurrentlyPlaying;
+		}
+	}
 
 	connectedCallback(): void {
 		super.connectedCallback();
+		// eslint-disable-next-line @typescript-eslint/no-misused-promises
 		KeyboardEventManager.subscribe(this.onKey);
 	}
 
 	disconnectedCallback(): void {
+		// eslint-disable-next-line @typescript-eslint/no-misused-promises
 		KeyboardEventManager.unsubscribe(this.onKey);
 		super.disconnectedCallback();
 	}

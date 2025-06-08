@@ -10,7 +10,7 @@ export class VideoPlayer extends LitElement {
 	@property({ type: String }) trackName: PlayerKey = 'track1';
 	@property({ type: String }) videoId: string = 'YQwTOpvcTYU';
 
-	private videoPlayerController = new VideoPlayerController(this);
+	private videoPlayerController = VideoPlayerController.getInstance(this);
 
 	render(): TemplateResult {
 		return html`
