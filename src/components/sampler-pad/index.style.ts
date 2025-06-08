@@ -19,11 +19,9 @@ export const componentStyles = css`
 }
 
 .sampler-pad:active,
-.sampler-pad-active {
+:host([active]) .sampler-pad {
   color: #e1b12c;
   box-shadow: 0 2px 0 rgba(225, 177, 44, 0.85);
   transform: translateY(2px);
 }
 `;
-
-

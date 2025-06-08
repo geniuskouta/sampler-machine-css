@@ -1,26 +1,43 @@
 import { LitElement, html, type TemplateResult } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement, state, property } from 'lit/decorators.js';
 import { resetStyles, globalStyles } from '../../styles';
 import { componentStyles } from './index.style';
 
 @customElement('sampler-pad-group')
 export class SamplerPadGroup extends LitElement {
-	@property({ type: Number }) count = 0;
+	@property({ type: Array }) keys: string[] = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
+
+	@state()
+	private activeKey: string | null = null;
+
+	private handleKeyDown = (e: KeyboardEvent) => {
+		this.activeKey = e.key.toLowerCase();
+	};
+
+	private handleKeyUp = () => {
+		this.activeKey = null;
+	};
+
+	connectedCallback(): void {
+		super.connectedCallback();
+		window.addEventListener('keydown', this.handleKeyDown);
+		window.addEventListener('keyup', this.handleKeyUp);
+	}
+
+	disconnectedCallback(): void {
+		window.removeEventListener('keydown', this.handleKeyDown);
+		window.removeEventListener('keyup', this.handleKeyUp);
+		super.disconnectedCallback();
+	}
 
 	render(): TemplateResult {
 		return html`
 			<nav class="sampler-pad-group">
-				<sampler-pad padName="q"></sampler-pad>
-				<sampler-pad padName="w"></sampler-pad>
-				<sampler-pad padName="e"></sampler-pad>
-				<sampler-pad padName="r"></sampler-pad>
-				<sampler-pad padName="t"></sampler-pad>
-				<sampler-pad padName="y"></sampler-pad>
-				<sampler-pad padName="u"></sampler-pad>
-				<sampler-pad padName="i"></sampler-pad>
-				<sampler-pad padName="o"></sampler-pad>
+				${this.keys.map((key) => html`
+				<sampler-pad padName=${key} ?active=${this.activeKey === key}></sampler-pad>
+				`)}
 			</nav>
-    `;
+		`;
 	}
 
 	static styles = [

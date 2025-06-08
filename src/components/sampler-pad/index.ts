@@ -6,6 +6,7 @@ import { componentStyles } from './index.style';
 @customElement('sampler-pad')
 export class SamplerPad extends LitElement {
 	@property({ type: String }) padName: string = '1';
+	@property({ type: Boolean, reflect: true }) active = false;
 
 	render(): TemplateResult {
 		return html`
