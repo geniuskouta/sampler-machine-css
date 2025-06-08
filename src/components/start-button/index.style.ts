@@ -23,7 +23,8 @@ export const componentStyles = css`
     font-size: 9px;
 }
 
-.track-button:active {
+.track-button:active,
+:host([active]) .track-button {
     box-shadow: 0 2px 0 #c6beae;
     transform: translateY(2px);
 }

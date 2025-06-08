@@ -2,6 +2,7 @@ import { LitElement, html, type TemplateResult } from 'lit';
 import { customElement, state, property } from 'lit/decorators.js';
 import { resetStyles, globalStyles } from '../../styles';
 import { componentStyles } from './index.style';
+import { KeyboardManager } from '../../managers';
 
 @customElement('sampler-pad-group')
 export class SamplerPadGroup extends LitElement {
@@ -10,23 +11,18 @@ export class SamplerPadGroup extends LitElement {
 	@state()
 	private activeKey: string | null = null;
 
-	private handleKeyDown = (e: KeyboardEvent) => {
-		this.activeKey = e.key.toLowerCase();
-	};
-
-	private handleKeyUp = () => {
-		this.activeKey = null;
+	private onKey = (key: string, type: 'down' | 'up') => {
+		if (type === 'down') this.activeKey = key;
+		else this.activeKey = null;
 	};
 
 	connectedCallback(): void {
 		super.connectedCallback();
-		window.addEventListener('keydown', this.handleKeyDown);
-		window.addEventListener('keyup', this.handleKeyUp);
+		KeyboardManager.subscribe(this.onKey);
 	}
 
 	disconnectedCallback(): void {
-		window.removeEventListener('keydown', this.handleKeyDown);
-		window.removeEventListener('keyup', this.handleKeyUp);
+		KeyboardManager.unsubscribe(this.onKey);
 		super.disconnectedCallback();
 	}
 
