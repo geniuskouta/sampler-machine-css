@@ -8,7 +8,7 @@ function handleKey(e: KeyboardEvent, type: 'down' | 'up') {
 window.addEventListener('keydown', (e) => handleKey(e, 'down'));
 window.addEventListener('keyup', (e) => handleKey(e, 'up'));
 
-export const KeyboardManager = {
+export const KeyboardEventManager = {
 	subscribe: (fn: (key: string, type: 'down' | 'up') => void): Set<(key: string, type: 'down' | 'up') => void> => listeners.add(fn),
 	unsubscribe: (fn: (key: string, type: 'down' | 'up') => void): boolean => listeners.delete(fn),
 };

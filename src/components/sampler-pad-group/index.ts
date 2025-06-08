@@ -2,7 +2,7 @@ import { LitElement, html, type TemplateResult } from 'lit';
 import { customElement, state, property } from 'lit/decorators.js';
 import { resetStyles, globalStyles } from '../../styles';
 import { componentStyles } from './index.style';
-import { KeyboardManager } from '../../managers';
+import { KeyboardEventManager } from '../../event-managers';
 
 @customElement('sampler-pad-group')
 export class SamplerPadGroup extends LitElement {
@@ -18,11 +18,11 @@ export class SamplerPadGroup extends LitElement {
 
 	connectedCallback(): void {
 		super.connectedCallback();
-		KeyboardManager.subscribe(this.onKey);
+		KeyboardEventManager.subscribe(this.onKey);
 	}
 
 	disconnectedCallback(): void {
-		KeyboardManager.unsubscribe(this.onKey);
+		KeyboardEventManager.unsubscribe(this.onKey);
 		super.disconnectedCallback();
 	}
 
