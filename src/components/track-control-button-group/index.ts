@@ -30,9 +30,9 @@ export class TrackControlButtonGroup extends LitElement {
 		const isCurrentlyPlaying = await this.videoPlayerController.getIsPlaying(player);
 
 		if (isCurrentlyPlaying) {
-			await player.pauseVideo();
+			await this.videoPlayerController.pauseVideo(player);
 		} else {
-			await player.playVideo();
+			await this.videoPlayerController.playVideo(player);
 		}
 
 		this.isPlaying = isCurrentlyPlaying;
@@ -46,6 +46,22 @@ export class TrackControlButtonGroup extends LitElement {
 			await this.toggleVideoPlayer(currentPlayer);
 		}
 	}
+
+	handleClickPlayVideo = async (): Promise<void> => {
+		const player = this.videoPlayerController.getCurrentPlayer();
+		if (!player) return;
+		const isCurrentlyPlaying = await this.videoPlayerController.getIsPlaying(player);
+		if (isCurrentlyPlaying) return;
+		await this.videoPlayerController.playVideo(player);
+	};
+
+	handleClickPauseVideo = async (): Promise<void> => {
+		const player = this.videoPlayerController.getCurrentPlayer();
+		if (!player) return;
+		const isCurrentlyPlaying = await this.videoPlayerController.getIsPlaying(player);
+		if (!isCurrentlyPlaying) return;
+		await this.videoPlayerController.pauseVideo(player);
+	};
 
 	connectedCallback(): void {
 		super.connectedCallback();
@@ -64,8 +80,8 @@ export class TrackControlButtonGroup extends LitElement {
 			<nav class="controller-content-track-functions">
 				<record-button></record-button>
 				<delete-button></delete-button>
-				<stop-button ?active=${this.isPlaying && this.activeKey === ' '}></stop-button>
-				<start-button ?active=${!this.isPlaying && this.activeKey === ' '}></start-button>
+				<stop-button @click=${this.handleClickPauseVideo} ?active=${this.isPlaying && this.activeKey === ' '}></stop-button>
+				<start-button @click=${this.handleClickPlayVideo} ?active=${!this.isPlaying && this.activeKey === ' '}></start-button>
 			</nav>
     `;
 	}

@@ -62,6 +62,14 @@ export class VideoPlayerController implements ReactiveController {
 		await player.setVolume(volume);
 	}
 
+	async pauseVideo(player: YouTubePlayer): Promise<void> {
+		await player.pauseVideo();
+	}
+
+	async playVideo(player: YouTubePlayer): Promise<void> {
+		await player.playVideo();
+	}
+
 	hostConnected(): void {
 		this.requestUpdate();
 	}
