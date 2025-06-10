@@ -58,21 +58,6 @@ export class VideoPlayerController implements ReactiveController {
 			.catch(() => false);
 	}
 
-	toggleCurrentPlayer(): void {
-		const player = this.getCurrentPlayer();
-		if (!player) return;
-
-		player.getPlayerState()
-			.then(state => {
-				if (state === PlayerStates.PLAYING) {
-					return player.pauseVideo();
-				} else {
-					return player.playVideo();
-				}
-			})
-			.catch(console.error);
-	}
-
 	hostConnected(): void {
 		this.requestUpdate();
 	}

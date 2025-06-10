@@ -4,6 +4,7 @@ import { resetStyles, globalStyles } from '../../styles';
 import { componentStyles } from './index.style';
 import { KeyboardEventManager } from '../../event-managers';
 import { VideoPlayerController } from '../../reactive-controllers';
+import type { YouTubePlayer } from 'youtube-player/dist/types';
 
 @customElement('track-control-button-group')
 export class TrackControlButtonGroup extends LitElement {
@@ -25,20 +26,24 @@ export class TrackControlButtonGroup extends LitElement {
 		}
 	};
 
+	async toggleVideoPlayer(player: YouTubePlayer): Promise<void> {
+		const isCurrentlyPlaying = await this.videoPlayerController.getIsPlaying(player);
+
+		if (isCurrentlyPlaying) {
+			await player.pauseVideo();
+		} else {
+			await player.playVideo();
+		}
+
+		this.isPlaying = isCurrentlyPlaying;
+	}
+
 	async toggleVideoBySpaceKey(key: string): Promise<void> {
+		const currentPlayer = this.videoPlayerController.getCurrentPlayer();
+		if (!currentPlayer) return;
+
 		if (key === ' ') {
-			const currentPlayer = this.videoPlayerController.getCurrentPlayer();
-			if (!currentPlayer) return;
-
-			const isCurrentlyPlaying = await this.videoPlayerController.getIsPlaying(currentPlayer);
-
-			if (isCurrentlyPlaying) {
-				await currentPlayer.pauseVideo();
-			} else {
-				await currentPlayer.playVideo();
-			}
-
-			this.isPlaying = isCurrentlyPlaying;
+			await this.toggleVideoPlayer(currentPlayer);
 		}
 	}
 
