@@ -58,6 +58,10 @@ export class VideoPlayerController implements ReactiveController {
 			.catch(() => false);
 	}
 
+	async setVolume(player: YouTubePlayer, volume: number): Promise<void> {
+		await player.setVolume(volume);
+	}
+
 	hostConnected(): void {
 		this.requestUpdate();
 	}
