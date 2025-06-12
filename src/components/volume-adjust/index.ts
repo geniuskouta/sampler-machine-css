@@ -3,6 +3,7 @@ import { customElement, query, property } from 'lit/decorators.js';
 import { resetStyles, globalStyles } from '../../styles';
 import { componentStyles } from './index.style';
 import { VideoPlayerController, type PlayerKey } from '../../reactive-controllers/video-player-controller';
+import { VideoEventManager } from '../../event-managers';
 
 @customElement('volume-adjust')
 export class VolumeAdjust extends LitElement {
@@ -29,6 +30,21 @@ export class VolumeAdjust extends LitElement {
 		if (!player) return;
 		this.videoPlayerController.setVolume(player, Number(this.volumeInput.value)).catch(err => { console.log(err); });
 	};
+
+	private setInitialVolume = () => {
+		const player = this.videoPlayerController.getCurrentPlayer();
+		if (!player) return;
+		this.videoPlayerController.getVolume(player).then((volume) => {
+			console.log(volume);
+			this.volumeInput.value = String(volume);
+			this.handleInputStyle();
+		}).catch(err => console.log(err));
+	};
+
+	connectedCallback(): void {
+		super.connectedCallback();
+		VideoEventManager.subscribe(this.setInitialVolume);
+	}
 
 	render(): TemplateResult {
 		return html`
