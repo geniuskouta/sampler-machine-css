@@ -5,12 +5,12 @@ import { componentStyles } from './index.style';
 
 @customElement('speed-adjust-button')
 export class SpeedAdjustButton extends LitElement {
-	@property({ type: String }) speed: string = '1x';
+	@property({ type: Number }) speed: number = 1;
 
 	render(): TemplateResult {
 		return html`
 		<div class="speed-button-container">
-			<span class="speed-button-label">${this.speed}</span>
+			<span class="speed-button-label">${this.speed}x</span>
 			<a class="speed-button"></a>
 		</div>
 	`;

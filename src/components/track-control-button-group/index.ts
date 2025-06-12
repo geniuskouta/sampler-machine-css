@@ -47,13 +47,13 @@ export class TrackControlButtonGroup extends LitElement {
 		}
 	}
 
-	handleClickPlayVideo = async (): Promise<void> => {
+	private handleClickPlayVideo = async (): Promise<void> => {
 		const player = this.videoPlayerController.getCurrentPlayer();
 		if (!player) return;
 		await this.videoPlayerController.playVideo(player);
 	};
 
-	handleClickPauseVideo = async (): Promise<void> => {
+	private handleClickPauseVideo = async (): Promise<void> => {
 		const player = this.videoPlayerController.getCurrentPlayer();
 		if (!player) return;
 		await this.videoPlayerController.pauseVideo(player);

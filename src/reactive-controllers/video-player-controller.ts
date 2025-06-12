@@ -107,6 +107,10 @@ export class VideoPlayerController implements ReactiveController {
 		return await player.getVolume();
 	}
 
+	async setPlaybackRate(player: YouTubePlayer, rate: number): Promise<void> {
+		await player.setPlaybackRate(rate);
+	}
+
 	async pauseVideo(player: YouTubePlayer): Promise<void> {
 		const playerState = await player.getPlayerState();
 		if (playerState !== PlayerStates.PLAYING) return;
