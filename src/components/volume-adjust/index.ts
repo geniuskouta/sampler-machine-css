@@ -1,11 +1,12 @@
 import { LitElement, html, type TemplateResult } from 'lit';
-import { customElement, query } from 'lit/decorators.js';
+import { customElement, query, property } from 'lit/decorators.js';
 import { resetStyles, globalStyles } from '../../styles';
 import { componentStyles } from './index.style';
-import { VideoPlayerController } from '../../reactive-controllers/video-player-controller';
+import { VideoPlayerController, type PlayerKey } from '../../reactive-controllers/video-player-controller';
 
 @customElement('volume-adjust')
 export class VolumeAdjust extends LitElement {
+	@property({ type: String }) trackName: PlayerKey = 'track1';
 	private videoPlayerController = VideoPlayerController.getInstance(this);
 
 	@query('#volume-adjust')

@@ -4,6 +4,7 @@ import { resetStyles, globalStyles } from '../../styles';
 import { componentStyles } from './index.style';
 import { VideoPlayerController, type PlayerKey } from '../../reactive-controllers/video-player-controller';
 import YouTubePlayer from 'youtube-player';
+import { VideoEventManager } from '../../event-managers';
 
 @customElement('video-player')
 export class VideoPlayer extends LitElement {
@@ -43,6 +44,16 @@ export class VideoPlayer extends LitElement {
 		});
 
 		this.videoPlayerController.addPlayer(this.trackName, player);
+
+		player.on('ready', () => {
+			// "player.ready" event is a lie
+			setTimeout(() => {
+				VideoEventManager.dispatchVideoLoadedEvent({
+					trackName: this.trackName,
+				});
+			}, 1000);
+		});
+
 
 		player.loadVideoById(this.videoId).catch(err => { console.log(err); });
 	}
