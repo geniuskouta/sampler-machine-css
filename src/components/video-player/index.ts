@@ -9,14 +9,12 @@ import { VideoEventManager } from '../../event-managers';
 @customElement('video-player')
 export class VideoPlayer extends LitElement {
 	@property({ type: String }) trackName: PlayerKey = 'track1';
-	@property({ type: String }) videoId: string = 'UHP76Ui-Egc';
+	@property({ type: String }) videoId: string = '';
 	private videoPlayerController = VideoPlayerController.getInstance(this);
 
 	render(): TemplateResult {
 		return html`
-			<div class="video-slot-container">
-				<div class="video-slot" id=${this.trackName}></div>
-          	</div>
+			<div class="video-slot" id=${this.trackName}></div>
 		`;
 	}
 
@@ -42,8 +40,6 @@ export class VideoPlayer extends LitElement {
 			}
 		});
 
-		this.videoPlayerController.addPlayer(this.trackName, player);
-
 		player.on('ready', () => {
 			// "player.ready" event is a lie
 			setTimeout(() => {
@@ -53,8 +49,18 @@ export class VideoPlayer extends LitElement {
 			}, 1000);
 		});
 
+		this.videoPlayerController.addInitialPlayer(this.trackName, player);
+	}
 
-		player.loadVideoById(this.videoId).catch(err => { console.log(err); });
+	updated(changedProperties: Map<string, unknown>): void {
+		if (changedProperties.has('videoId') && this.videoId) {
+			const player = this.videoPlayerController.getPlayerByPlayerKey(this.trackName);
+			if (!player) return;
+
+			player.loadVideoById(this.videoId).catch(err => {
+				console.error(`Failed to load video "${this.videoId}" for ${this.trackName}`, err);
+			});
+		}
 	}
 }
 

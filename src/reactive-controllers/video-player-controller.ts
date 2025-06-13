@@ -8,6 +8,7 @@ export type QueuePoints = Record<string, number>;
 type State = {
 	players: Map<PlayerKey, YouTubePlayer | null>,
 	queuePoints: Map<PlayerKey, QueuePoints>,
+	videoIds: Map<PlayerKey, string | null>,
 	lastPlayerKey: PlayerKey | null,
 	lastQueueKey: string | null,
 };
@@ -16,7 +17,6 @@ export class VideoPlayerController implements ReactiveController {
 	private static _instance: VideoPlayerController;
 
 	private hosts = new Set<ReactiveControllerHost>();
-
 
 	private queueKeySets = [
 		'123456789',
@@ -36,12 +36,17 @@ export class VideoPlayerController implements ReactiveController {
 			['track2', null],
 			['track3', null],
 		]),
+		videoIds: new Map<PlayerKey, string | null>([
+			['track1', 'RWFa4qNCtY4'],
+			['track2', null],
+			['track3', null],
+		]),
 		queuePoints: new Map<PlayerKey, QueuePoints>([
 			['track1', {}],
 			['track2', {}],
 			['track3', {}],
 		]),
-		lastPlayerKey: null,
+		lastPlayerKey: 'track1',
 		lastQueueKey: null
 	};
 
@@ -60,7 +65,34 @@ export class VideoPlayerController implements ReactiveController {
 		return VideoPlayerController._instance;
 	}
 
-	addPlayer(key: PlayerKey, player: YouTubePlayer): void {
+	getPlayerKeys(): PlayerKey[] {
+		return Object.keys(this.playerKeyToKeys) as PlayerKey[];
+	}
+
+	getVideoIds(): Map<PlayerKey, string | null> {
+		return this.value.videoIds;
+	}
+
+	setLastPlayerKey(key: PlayerKey): void {
+		if (this.value.lastPlayerKey !== key) {
+			this.value.lastPlayerKey = key;
+			this.requestUpdate();
+		}
+	}
+
+	setLastQueueKey(key: string): void {
+		if (this.value.lastQueueKey !== key) {
+			this.value.lastQueueKey = key;
+			this.requestUpdate();
+		}
+	}
+
+	addInitialPlayer(key: PlayerKey, player: YouTubePlayer): void {
+		this.value.players.set(key, player);
+		this.requestUpdate();
+	}
+
+	setPlayer(key: PlayerKey, player: YouTubePlayer): void {
 		this.value.players.set(key, player);
 		this.value.lastPlayerKey = key;
 		this.value.lastQueueKey = null;
@@ -69,10 +101,12 @@ export class VideoPlayerController implements ReactiveController {
 
 	async setDefaultQueuePoints(key: PlayerKey, player: YouTubePlayer): Promise<void> {
 		const duration = await this.getDuration(player);
-		console.log(duration);
 		const queuePoints = this.createQueuePointsFromDuration(this.playerKeyToKeys[key], duration);
-		// console.log(queuePoints);
 		this.value.queuePoints.set(key, queuePoints);
+	}
+
+	getPlayerByPlayerKey(key: PlayerKey): YouTubePlayer | null {
+		return this.value.players.get(key) ?? null;
 	}
 
 	getCurrentPlayer(): YouTubePlayer | null {
