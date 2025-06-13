@@ -9,7 +9,7 @@ type State = {
 	players: Map<PlayerKey, YouTubePlayer | null>,
 	queuePoints: Map<PlayerKey, QueuePoints>,
 	videoIds: Map<PlayerKey, string | null>,
-	lastPlayerKey: PlayerKey | null,
+	lastPlayerKey: PlayerKey,
 	lastQueueKey: string | null,
 };
 
@@ -38,8 +38,8 @@ export class VideoPlayerController implements ReactiveController {
 		]),
 		videoIds: new Map<PlayerKey, string | null>([
 			['track1', 'RWFa4qNCtY4'],
-			['track2', 'RWFa4qNCtY4'],
-			['track3', 'RWFa4qNCtY4'],
+			['track2', 'OodEsjZ88TQ'],
+			['track3', 'GMcNz9fjC7E'],
 		]),
 		queuePoints: new Map<PlayerKey, QueuePoints>([
 			['track1', {}],
@@ -103,6 +103,10 @@ export class VideoPlayerController implements ReactiveController {
 		const duration = await this.getDuration(player);
 		const queuePoints = this.createQueuePointsFromDuration(this.playerKeyToKeys[key], duration);
 		this.value.queuePoints.set(key, queuePoints);
+	}
+
+	getKeysByPlayerKey(key: PlayerKey): string {
+		return this.playerKeyToKeys[key];
 	}
 
 	getPlayerByPlayerKey(key: PlayerKey): YouTubePlayer | null {

@@ -44,17 +44,26 @@ export class SamplerPadGroup extends LitElement {
 		this.playFromQueuePoint(padName);
 	};
 
-	private handleSetDefaultQueuePoints = (type: VideoEventType, _: VideoEventDetail) => {
+	private handleSetDefaultQueuePoints = (type: VideoEventType, detail: VideoEventDetail) => {
 		if (type !== 'video-loaded') return;
-		const player = this.videoPlayerController.getCurrentPlayer();
+		const player = this.videoPlayerController.getPlayerByPlayerKey(detail.trackName);
 		if (!player) return;
-		this.videoPlayerController.setDefaultQueuePoints(this.trackName, player).catch(err => console.log(err));
+		this.videoPlayerController.setDefaultQueuePoints(detail.trackName, player).catch(err => console.log(err));
+	};
+
+	private handleSwitchPads = (type: VideoEventType, detail: VideoEventDetail) => {
+		if (type !== 'track-switched') return;
+		const player = this.videoPlayerController.getPlayerByPlayerKey(detail.trackName);
+		if (!player) return;
+		const keys = this.videoPlayerController.getKeysByPlayerKey(detail.trackName);
+		this.keys = keys.split('');
 	};
 
 	connectedCallback(): void {
 		super.connectedCallback();
 		KeyboardEventManager.subscribe(this.onKey);
 		VideoEventManager.subscribe(this.handleSetDefaultQueuePoints);
+		VideoEventManager.subscribe(this.handleSwitchPads);
 	}
 
 	disconnectedCallback(): void {
