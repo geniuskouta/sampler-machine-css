@@ -4,6 +4,7 @@ import { resetStyles, globalStyles } from '../../styles';
 import { componentStyles } from './index.style';
 import { VideoPlayerController } from '../../reactive-controllers';
 import type { PlayerKey } from '../../reactive-controllers/video-player-controller';
+import { VideoEventManager } from '../../event-managers';
 
 @customElement('track-switch-button-group')
 export class TrackSwitchButtonGroup extends LitElement {
@@ -14,7 +15,11 @@ export class TrackSwitchButtonGroup extends LitElement {
 		const target = event.currentTarget as HTMLElement;
 		const trackName = target.getAttribute('trackName');
 		if (!trackName) return;
-		this.videoPlayerController.setLastPlayerKey(trackName.toLowerCase() as PlayerKey);
+		const playerKey = trackName.toLowerCase() as PlayerKey;
+		this.videoPlayerController.setLastPlayerKey(playerKey);
+		VideoEventManager.dispatchVideoSwitchedEvent({
+			trackName: playerKey
+		});
 	};
 
 	render(): TemplateResult {

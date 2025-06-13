@@ -38,8 +38,8 @@ export class VideoPlayerController implements ReactiveController {
 		]),
 		videoIds: new Map<PlayerKey, string | null>([
 			['track1', 'RWFa4qNCtY4'],
-			['track2', null],
-			['track3', null],
+			['track2', 'RWFa4qNCtY4'],
+			['track3', 'RWFa4qNCtY4'],
 		]),
 		queuePoints: new Map<PlayerKey, QueuePoints>([
 			['track1', {}],

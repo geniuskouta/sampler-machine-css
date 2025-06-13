@@ -1,4 +1,4 @@
-export type VideoEventType = 'video-loaded' | 'video-play' | 'video-pause';
+export type VideoEventType = 'video-loaded' | 'track-switched' | 'video-play' | 'video-pause';
 import { type PlayerKey } from '../reactive-controllers/video-player-controller';
 
 export type VideoEventDetail = {
@@ -11,7 +11,7 @@ const listeners = new Set<Listener>();
 
 function handleEvent(e: CustomEvent) {
 	// Only handle events of the types we care about
-	if (!['video-loaded', 'video-play', 'video-pause'].includes(e.type)) return;
+	if (!['video-loaded', 'track-switched', 'video-play', 'video-pause'].includes(e.type)) return;
 
 	for (const listener of listeners) {
 		listener(e.type as VideoEventType, e.detail as VideoEventDetail);
@@ -19,6 +19,7 @@ function handleEvent(e: CustomEvent) {
 }
 
 // Listen to custom video events bubbling and composed on document
+document.addEventListener('track-switched', handleEvent as EventListener);
 document.addEventListener('video-loaded', handleEvent as EventListener);
 document.addEventListener('video-play', handleEvent as EventListener);
 document.addEventListener('video-pause', handleEvent as EventListener);
@@ -29,6 +30,14 @@ export const VideoEventManager = {
 		return listeners;
 	},
 	unsubscribe: (fn: Listener): boolean => listeners.delete(fn),
+
+	dispatchVideoSwitchedEvent: (detail: VideoEventDetail): void => {
+		document.dispatchEvent(new CustomEvent('track-switched', {
+			bubbles: true,
+			composed: true,
+			detail,
+		}));
+	},
 
 	dispatchVideoLoadedEvent: (detail: VideoEventDetail): void => {
 		document.dispatchEvent(new CustomEvent('video-loaded', {

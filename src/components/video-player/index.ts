@@ -32,6 +32,7 @@ export class VideoPlayer extends LitElement {
 		}
 		const player = YouTubePlayer(playerElement, {
 			playerVars: {
+				autoplay: 0,
 				controls: 0,         // Hide player controls
 				modestbranding: 1,   // Reduce YouTube branding
 				rel: 0,              // Don't show related videos at the end

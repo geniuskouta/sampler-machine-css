@@ -1,13 +1,13 @@
 import { LitElement, html, type TemplateResult } from 'lit';
-import { customElement, query, property } from 'lit/decorators.js';
+import { customElement, query } from 'lit/decorators.js';
 import { resetStyles, globalStyles } from '../../styles';
 import { componentStyles } from './index.style';
-import { VideoPlayerController, type PlayerKey } from '../../reactive-controllers/video-player-controller';
+import { VideoPlayerController } from '../../reactive-controllers/video-player-controller';
 import { VideoEventManager } from '../../event-managers';
+import type { VideoEventDetail, VideoEventType } from '../../event-managers/video-event-manager';
 
 @customElement('volume-adjust')
 export class VolumeAdjust extends LitElement {
-	@property({ type: String }) trackName: PlayerKey = 'track1';
 	private videoPlayerController = VideoPlayerController.getInstance(this);
 
 	@query('#volume-adjust')
@@ -31,11 +31,11 @@ export class VolumeAdjust extends LitElement {
 		this.videoPlayerController.setVolume(player, Number(this.volumeInput.value)).catch(err => { console.log(err); });
 	};
 
-	private setInitialVolume = () => {
+	private setInitialVolume = (type: VideoEventType, _: VideoEventDetail) => {
+		if (!['track-switched', 'video-loaded'].includes(type)) return;
 		const player = this.videoPlayerController.getCurrentPlayer();
 		if (!player) return;
 		this.videoPlayerController.getVolume(player).then((volume) => {
-			console.log(volume);
 			this.volumeInput.value = String(volume);
 			this.handleInputStyle();
 		}).catch(err => console.log(err));
