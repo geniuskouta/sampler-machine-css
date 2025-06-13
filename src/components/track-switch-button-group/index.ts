@@ -1,18 +1,28 @@
 import { LitElement, html, type TemplateResult } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement } from 'lit/decorators.js';
 import { resetStyles, globalStyles } from '../../styles';
 import { componentStyles } from './index.style';
+import { VideoPlayerController } from '../../reactive-controllers';
+import type { PlayerKey } from '../../reactive-controllers/video-player-controller';
 
 @customElement('track-switch-button-group')
 export class TrackSwitchButtonGroup extends LitElement {
-	@property({ type: Number }) count = 0;
+
+	private videoPlayerController = VideoPlayerController.getInstance(this);
+
+	handleClickTrack = (event: Event): void => {
+		const target = event.currentTarget as HTMLElement;
+		const trackName = target.getAttribute('trackName');
+		if (!trackName) return;
+		this.videoPlayerController.setLastPlayerKey(trackName.toLowerCase() as PlayerKey);
+	};
 
 	render(): TemplateResult {
 		return html`
 			<nav class="track-switch-button-list">
-				<track-switch-button trackName="TRACK1"></track-switch-button>
-				<track-switch-button trackName="TRACK2"></track-switch-button>
-				<track-switch-button trackName="TRACK3"></track-switch-button>
+				<track-switch-button @click=${this.handleClickTrack} trackName="TRACK1"></track-switch-button>
+				<track-switch-button @click=${this.handleClickTrack} trackName="TRACK2"></track-switch-button>
+				<track-switch-button @click=${this.handleClickTrack} trackName="TRACK3"></track-switch-button>
 			</nav>
     `;
 	}
