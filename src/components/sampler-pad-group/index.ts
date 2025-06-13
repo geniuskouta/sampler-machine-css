@@ -34,6 +34,16 @@ export class SamplerPadGroup extends LitElement {
 		this.videoPlayerController.playFromSeekTime(player, Number(queuePoints[key])).catch(err => console.log(err));
 	};
 
+	private handleClickPad = (event: Event) => {
+		const player = this.videoPlayerController.getCurrentPlayer();
+		if (!player) return;
+
+		const target = event.currentTarget as HTMLElement;
+		const padName = target.getAttribute('padName');
+		if (!padName) return;
+		this.playFromQueuePoint(padName);
+	};
+
 	private handleSetDefaultQueuePoints = (type: VideoEventType, _: VideoEventDetail) => {
 		if (type !== 'video-loaded') return;
 		const player = this.videoPlayerController.getCurrentPlayer();
@@ -56,7 +66,7 @@ export class SamplerPadGroup extends LitElement {
 		return html`
 			<nav class="sampler-pad-group">
 				${this.keys.map((key) => html`
-				<sampler-pad padName=${key} ?active=${this.activeKey === key}></sampler-pad>
+				<sampler-pad @click=${this.handleClickPad} padName=${key} ?active=${this.activeKey === key}></sampler-pad>
 				`)}
 			</nav>
 		`;

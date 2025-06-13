@@ -9,7 +9,7 @@ import { VideoEventManager } from '../../event-managers';
 @customElement('video-player')
 export class VideoPlayer extends LitElement {
 	@property({ type: String }) trackName: PlayerKey = 'track1';
-	@property({ type: String }) videoId: string = '0sSe8Xrnb-E';
+	@property({ type: String }) videoId: string = 'UHP76Ui-Egc';
 	private videoPlayerController = VideoPlayerController.getInstance(this);
 
 	render(): TemplateResult {
