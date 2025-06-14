@@ -1,0 +1,56 @@
+body {
+	background-color: #2f3640;
+	background-image: url(../img/stars-bg.svg);
+	font-family: "Nunito", sans-serif;
+	min-width: 720px;
+}
+
+.container {
+	margin-top: 60px;
+	padding: 0 20px;
+}
+
+.controller {
+	display: flex;
+	margin: 0 auto;
+	width: 698px;
+	justify-content: space-between;
+	background: #dbd7cc;
+	box-shadow: 0 52px 0 #c6c0b0;
+	border-radius: 8px;
+	border-bottom: 3px solid #99907a;
+	padding: 20px;
+}
+
+.content-a-display {
+	padding-left: 10px;
+}
+
+.content-a-control-group {
+	display: flex;
+	gap: 16px;
+	margin-top: 32px;
+}
+
+.content-a-control-group-track-control-button-group-wrapper {
+	margin-top: 24px;
+}
+
+.content-b-brand {
+	display: flex;
+	width: 300px;
+	justify-content: space-between;
+	padding-right: 10px;
+}
+
+.content-b-brand-text-company-name {
+	color: #c37e8f;
+	font-size: 28px;
+	font-weight: bold;
+}
+
+.content-b-brand-text-model-name {
+	color: #97978f;
+	font-size: 26px;
+	font-weight: bold;
+}

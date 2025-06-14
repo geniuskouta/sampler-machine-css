@@ -1,0 +1,16 @@
+import './volume-adjust/index.ts';
+import './speed-adjust-button/index.ts';
+import './speed-adjust-button-group/index.ts';
+import './record-button/index.ts';
+import './delete-button/index.ts';
+import './stop-button/index.ts';
+import './start-button/index.ts';
+import './track-control-button-group/index.ts';
+import './video-player/index.ts';
+import './track-switch-button/index.ts';
+import './track-switch-button-group/index.ts';
+import './sampler-pad/index.ts';
+import './sampler-pad-group/index.ts';
+import './video-player-group/index.ts';
+import './record-modal/index.ts';
+import './queue-point-adjust/index.ts';
