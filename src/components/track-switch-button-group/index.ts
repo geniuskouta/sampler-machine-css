@@ -1,15 +1,23 @@
 import { LitElement, html, type TemplateResult } from 'lit';
-import { customElement } from 'lit/decorators.js';
+import { customElement, state } from 'lit/decorators.js';
 import { resetStyles, globalStyles } from '../../styles';
 import { componentStyles } from './index.style';
 import { VideoPlayerController } from '../../reactive-controllers';
 import type { PlayerKey } from '../../reactive-controllers/video-player-controller';
 import { VideoEventManager } from '../../event-managers';
+import type { VideoEventDetail, VideoEventType } from '../../event-managers/video-event-manager';
 
 @customElement('track-switch-button-group')
 export class TrackSwitchButtonGroup extends LitElement {
 
 	private videoPlayerController = VideoPlayerController.getInstance(this);
+
+	private get playerKeys(): PlayerKey[] {
+		return this.videoPlayerController.getPlayerKeys();
+	}
+
+	@state()
+	private activePlayerKey: PlayerKey = this.videoPlayerController.getLastPlayerKey();
 
 	handleClickTrack = (event: Event): void => {
 		const target = event.currentTarget as HTMLElement;
@@ -22,12 +30,21 @@ export class TrackSwitchButtonGroup extends LitElement {
 		});
 	};
 
+	handleVideoSwitched = (eventType: VideoEventType, detail: VideoEventDetail): void => {
+		if (eventType === 'track-switched')
+			this.activePlayerKey = detail.trackName;
+	};
+
+	connectedCallback(): void {
+		super.connectedCallback();
+		VideoEventManager.subscribe(this.handleVideoSwitched);
+	}
+
 	render(): TemplateResult {
+		console.log(this.activePlayerKey);
 		return html`
 			<nav class="track-switch-button-list">
-				<track-switch-button @click=${this.handleClickTrack} trackName="TRACK1"></track-switch-button>
-				<track-switch-button @click=${this.handleClickTrack} trackName="TRACK2"></track-switch-button>
-				<track-switch-button @click=${this.handleClickTrack} trackName="TRACK3"></track-switch-button>
+				${this.playerKeys.map(key => html`<track-switch-button @click=${this.handleClickTrack} trackName=${key.toUpperCase()} .active=${key === this.activePlayerKey}></track-switch-button>`)}
 			</nav>
     `;
 	}

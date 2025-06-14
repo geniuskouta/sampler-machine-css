@@ -74,6 +74,10 @@ export class VideoPlayerController implements ReactiveController {
 		return null;
 	}
 
+	getLastPlayerKey(): PlayerKey {
+		return this.value.lastPlayerKey;
+	}
+
 	getPlayerKeys(): PlayerKey[] {
 		return Object.keys(this.playerKeyToKeys) as PlayerKey[];
 	}
