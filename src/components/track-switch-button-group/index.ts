@@ -41,7 +41,6 @@ export class TrackSwitchButtonGroup extends LitElement {
 	}
 
 	render(): TemplateResult {
-		console.log(this.activePlayerKey);
 		return html`
 			<nav class="track-switch-button-list">
 				${this.playerKeys.map(key => html`<track-switch-button @click=${this.handleClickTrack} trackName=${key.toUpperCase()} .active=${key === this.activePlayerKey}></track-switch-button>`)}

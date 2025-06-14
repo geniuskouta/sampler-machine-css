@@ -28,7 +28,6 @@ export class SamplerPadGroup extends LitElement {
 
 	private setPlayerByKey = (key: string) => {
 		const playerKey = this.videoPlayerController.getPlayerKeyByQueueKey(key);
-		console.log(playerKey);
 		if (!playerKey) return;
 		this.videoPlayerController.setLastPlayerKey(playerKey);
 		VideoEventManager.dispatchVideoSwitchedEvent({ trackName: playerKey });

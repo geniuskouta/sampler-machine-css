@@ -54,7 +54,17 @@ export class VideoPlayer extends LitElement {
 	}
 
 	updated(changedProperties: Map<string, unknown>): void {
-		if (changedProperties.has('videoId') && this.videoId) {
+		if (changedProperties.has('videoId')) {
+
+			const playerElement: HTMLElement | null = this.renderRoot.querySelector(`#${this.trackName}`);
+			if (!playerElement) return;
+			if (this.videoId === '') {
+				// hide the playerElement when video id is not set
+				playerElement.style.opacity = '0';
+				return;
+			}
+
+
 			const player = this.videoPlayerController.getPlayerByPlayerKey(this.trackName);
 			if (!player) return;
 
