@@ -57,6 +57,7 @@ export class SamplerPadGroup extends LitElement {
 		const player = this.videoPlayerController.getPlayerByPlayerKey(detail.trackName);
 		if (!player) return;
 		this.videoPlayerController.setDefaultQueuePoints(detail.trackName, player).catch(err => console.log(err));
+		this.videoPlayerController.pauseVideo(player).catch(err => console.log(err));
 	};
 
 	private handleSwitchPads = (type: VideoEventType, detail: VideoEventDetail) => {

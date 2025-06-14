@@ -11,6 +11,7 @@ type State = {
 	videoIds: Map<PlayerKey, string | null>,
 	lastPlayerKey: PlayerKey,
 	lastQueueKey: string | null,
+	showRecordModal: boolean
 };
 
 export class VideoPlayerController implements ReactiveController {
@@ -37,9 +38,9 @@ export class VideoPlayerController implements ReactiveController {
 			['track3', null],
 		]),
 		videoIds: new Map<PlayerKey, string | null>([
-			['track1', 'RWFa4qNCtY4'],
+			['track1', ''],
 			['track2', ''],
-			['track3', 'GMcNz9fjC7E'],
+			['track3', ''],
 		]),
 		queuePoints: new Map<PlayerKey, QueuePoints>([
 			['track1', {}],
@@ -47,7 +48,8 @@ export class VideoPlayerController implements ReactiveController {
 			['track3', {}],
 		]),
 		lastPlayerKey: 'track1',
-		lastQueueKey: null
+		lastQueueKey: null,
+		showRecordModal: false
 	};
 
 	private constructor() { }
@@ -74,6 +76,15 @@ export class VideoPlayerController implements ReactiveController {
 		return null;
 	}
 
+	getShowRecordModal(): boolean {
+		return this.value.showRecordModal;
+	}
+
+	setShowRecordModal(value: boolean): void {
+		this.value.showRecordModal = value;
+		this.requestUpdate();
+	}
+
 	getLastPlayerKey(): PlayerKey {
 		return this.value.lastPlayerKey;
 	}
@@ -84,6 +95,11 @@ export class VideoPlayerController implements ReactiveController {
 
 	getVideoIds(): Map<PlayerKey, string | null> {
 		return this.value.videoIds;
+	}
+
+	setVideoId(key: PlayerKey, videoId: string): void {
+		this.value.videoIds.set(key, videoId);
+		this.requestUpdate();
 	}
 
 	setLastPlayerKey(key: PlayerKey): void {
@@ -180,9 +196,6 @@ export class VideoPlayerController implements ReactiveController {
 
 	async loadVideoById(player: YouTubePlayer, videoId: string): Promise<void> {
 		await player.loadVideoById(videoId);
-		setTimeout(async () => {
-			await player.pauseVideo();
-		}, 350);
 	}
 
 	createQueuePointsFromDuration(keys: string, duration: number): QueuePoints {

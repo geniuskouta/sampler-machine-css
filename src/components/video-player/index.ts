@@ -40,16 +40,6 @@ export class VideoPlayer extends LitElement {
 				disablekb: 1         // Disable keyboard controls
 			}
 		});
-
-		player.on('ready', () => {
-			// "player.ready" event is a lie
-			setTimeout(() => {
-				VideoEventManager.dispatchVideoLoadedEvent({
-					trackName: this.trackName,
-				});
-			}, 1000);
-		});
-
 		this.videoPlayerController.addInitialPlayer(this.trackName, player);
 	}
 
@@ -64,13 +54,21 @@ export class VideoPlayer extends LitElement {
 				return;
 			}
 
+			playerElement.style.opacity = '';
 
 			const player = this.videoPlayerController.getPlayerByPlayerKey(this.trackName);
 			if (!player) return;
 
-			this.videoPlayerController.loadVideoById(player, this.videoId).catch(err => {
-				console.error(`Failed to load video "${this.videoId}" for ${this.trackName}`, err);
-			});
+			this.videoPlayerController.loadVideoById(player, this.videoId)
+				.then(() => {
+					setTimeout(() => {
+						VideoEventManager.dispatchVideoLoadedEvent({
+							trackName: this.trackName,
+						});
+					}, 2000);
+				}).catch(err => {
+					console.error(`Failed to load video "${this.videoId}" for ${this.trackName}`, err);
+				});
 		}
 	}
 }
