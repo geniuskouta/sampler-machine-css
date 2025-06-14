@@ -59,7 +59,7 @@ export class QueuePointAdjust extends LitElement {
 	};
 
 	handleUpdateQueuePointAdjustMax = (type: VideoEventType, _: VideoEventDetail): void => {
-		if (!['video-loaded', 'track-switched'].includes(type)) return;
+		if (!['video-loaded', 'track-switched', 'pad-pointerdown'].includes(type)) return;
 		if (!this.player) return;
 		const duration = this.playerDuration;
 		if (this.queuePointAdjust && duration > 0) {
@@ -110,7 +110,7 @@ export class QueuePointAdjust extends LitElement {
 				<div class="queue-point-adjust-meter" id="queue-point-adjust-meter" style="width: 0px;">
 					<span class="queue-point-adjust-meter-key" id="queue-point-adjust-meter-key"></span>
 				</div>
-				<input class="queue-point-adjust" type="range" @input=${this.handleInputQueuePoint} @change=${this.handleChangeQueuePoint} id="queue-point-adjust" step="0.01" max="100">
+				<input value="0" class="queue-point-adjust" type="range" @input=${this.handleInputQueuePoint} @change=${this.handleChangeQueuePoint} id="queue-point-adjust" step="0.01" max="100">
 		</div>
 		`;
 	}
