@@ -65,6 +65,15 @@ export class VideoPlayerController implements ReactiveController {
 		return VideoPlayerController._instance;
 	}
 
+	getPlayerKeyByQueueKey(key: string): PlayerKey | null {
+		for (const [playerKey, queueKey] of Object.entries(this.playerKeyToKeys)) {
+			if (queueKey.includes(key)) {
+				return playerKey as PlayerKey;
+			}
+		}
+		return null;
+	}
+
 	getPlayerKeys(): PlayerKey[] {
 		return Object.keys(this.playerKeyToKeys) as PlayerKey[];
 	}

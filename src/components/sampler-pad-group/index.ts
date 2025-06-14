@@ -19,10 +19,19 @@ export class SamplerPadGroup extends LitElement {
 	private onKey = (key: string, type: 'down' | 'up') => {
 		if (type === 'down') {
 			this.activeKey = key;
+			this.setPlayerByKey(key);
 			this.playFromQueuePoint(key);
 		} else {
 			this.activeKey = null;
 		}
+	};
+
+	private setPlayerByKey = (key: string) => {
+		const playerKey = this.videoPlayerController.getPlayerKeyByQueueKey(key);
+		console.log(playerKey);
+		if (!playerKey) return;
+		this.videoPlayerController.setLastPlayerKey(playerKey);
+		VideoEventManager.dispatchVideoSwitchedEvent({ trackName: playerKey });
 	};
 
 	private playFromQueuePoint = (key: string) => {
