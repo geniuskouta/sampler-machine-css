@@ -13,3 +13,4 @@ import './sampler-pad/index.ts';
 import './sampler-pad-group/index.ts';
 import './video-player-group/index.ts';
 import './record-modal/index.ts';
+import './queue-point-adjust/index.ts';

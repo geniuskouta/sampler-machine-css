@@ -8,6 +8,7 @@ export type QueuePoints = Record<string, number>;
 type State = {
 	players: Map<PlayerKey, YouTubePlayer | null>,
 	queuePoints: Map<PlayerKey, QueuePoints>,
+	playerDurations: Map<PlayerKey, number>,
 	videoIds: Map<PlayerKey, string | null>,
 	lastPlayerKey: PlayerKey,
 	lastQueueKey: string | null,
@@ -38,7 +39,7 @@ export class VideoPlayerController implements ReactiveController {
 			['track3', null],
 		]),
 		videoIds: new Map<PlayerKey, string | null>([
-			['track1', ''],
+			['track1', 'jL99kKewy_Q'],
 			['track2', ''],
 			['track3', ''],
 		]),
@@ -46,6 +47,11 @@ export class VideoPlayerController implements ReactiveController {
 			['track1', {}],
 			['track2', {}],
 			['track3', {}],
+		]),
+		playerDurations: new Map<PlayerKey, number>([
+			['track1', 0],
+			['track2', 0],
+			['track3', 0]
 		]),
 		lastPlayerKey: 'track1',
 		lastQueueKey: null,
@@ -97,8 +103,20 @@ export class VideoPlayerController implements ReactiveController {
 		return this.value.videoIds;
 	}
 
+	getLastQueueKey(): string | null {
+		return this.value.lastQueueKey;
+	}
+
 	setVideoId(key: PlayerKey, videoId: string): void {
 		this.value.videoIds.set(key, videoId);
+		this.requestUpdate();
+	}
+
+	updateLastQueuePoint(newTime: number): void {
+		if (!this.value.lastPlayerKey || !this.value.lastQueueKey) return;
+		const target = this.value.queuePoints.get(this.value.lastPlayerKey);
+		if (!target) return;
+		target[this.value.lastQueueKey] = newTime;
 		this.requestUpdate();
 	}
 
@@ -132,6 +150,7 @@ export class VideoPlayerController implements ReactiveController {
 		const duration = await this.getDuration(player);
 		const queuePoints = this.createQueuePointsFromDuration(this.playerKeyToKeys[key], duration);
 		this.value.queuePoints.set(key, queuePoints);
+		this.value.playerDurations.set(key, duration); // cache player duration
 	}
 
 	getKeysByPlayerKey(key: PlayerKey): string {
@@ -150,6 +169,10 @@ export class VideoPlayerController implements ReactiveController {
 	getCurrentQueuePoints(): QueuePoints | null {
 		if (!this.value.lastPlayerKey) return null;
 		return this.value.queuePoints.get(this.value.lastPlayerKey) ?? null;
+	}
+
+	getQueuePointsByPlayerKey(playerKey: PlayerKey): QueuePoints | null {
+		return this.value.queuePoints.get(playerKey) ?? null;
 	}
 
 	async playFromSeekTime(player: YouTubePlayer, seekTime: number): Promise<void> {
@@ -188,6 +211,10 @@ export class VideoPlayerController implements ReactiveController {
 		const playerState = await player.getPlayerState();
 		if (playerState === PlayerStates.PLAYING) return;
 		await player.playVideo();
+	}
+
+	getCachedDurationByPlayerKey(playerKey: PlayerKey): number {
+		return this.value.playerDurations.get(playerKey) ?? 0;
 	}
 
 	async getDuration(player: YouTubePlayer): Promise<number> {

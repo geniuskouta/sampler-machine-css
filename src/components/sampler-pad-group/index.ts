@@ -40,6 +40,7 @@ export class SamplerPadGroup extends LitElement {
 		if (!queuePoints) return;
 		if (!Object.prototype.hasOwnProperty.call(queuePoints, key)) return;
 		this.videoPlayerController.playFromSeekTime(player, Number(queuePoints[key])).catch(err => console.log(err));
+		this.videoPlayerController.setLastQueueKey(key);
 	};
 
 	private handleClickPad = (event: Event) => {
