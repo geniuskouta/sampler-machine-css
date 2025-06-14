@@ -178,6 +178,13 @@ export class VideoPlayerController implements ReactiveController {
 		return await player.getDuration();
 	}
 
+	async loadVideoById(player: YouTubePlayer, videoId: string): Promise<void> {
+		await player.loadVideoById(videoId);
+		setTimeout(async () => {
+			await player.pauseVideo();
+		}, 350);
+	}
+
 	createQueuePointsFromDuration(keys: string, duration: number): QueuePoints {
 		const queuePoints: QueuePoints = {};
 		const count = keys.length;

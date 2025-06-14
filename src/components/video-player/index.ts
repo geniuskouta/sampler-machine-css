@@ -35,7 +35,7 @@ export class VideoPlayer extends LitElement {
 				autoplay: 0,
 				controls: 0,         // Hide player controls
 				modestbranding: 1,   // Reduce YouTube branding
-				rel: 0,              // Don't show related videos at the end
+				rel: 1,              // Don't show related videos at the end
 				fs: 0,               // Disable fullscreen button
 				disablekb: 1         // Disable keyboard controls
 			}
@@ -58,7 +58,7 @@ export class VideoPlayer extends LitElement {
 			const player = this.videoPlayerController.getPlayerByPlayerKey(this.trackName);
 			if (!player) return;
 
-			player.loadVideoById(this.videoId).catch(err => {
+			this.videoPlayerController.loadVideoById(player, this.videoId).catch(err => {
 				console.error(`Failed to load video "${this.videoId}" for ${this.trackName}`, err);
 			});
 		}
