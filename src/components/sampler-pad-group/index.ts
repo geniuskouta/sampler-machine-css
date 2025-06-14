@@ -51,6 +51,7 @@ export class SamplerPadGroup extends LitElement {
 		const padName = target.getAttribute('padName');
 		if (!padName) return;
 		this.playFromQueuePoint(padName);
+		VideoEventManager.dispatchPadPointerdownEvent({ trackName: this.trackName }); // let queue adjust know about the pad event
 	};
 
 	private handleSetDefaultQueuePoints = (type: VideoEventType, detail: VideoEventDetail) => {
@@ -85,7 +86,7 @@ export class SamplerPadGroup extends LitElement {
 		return html`
 			<nav class="sampler-pad-group">
 				${this.keys.map((key) => html`
-				<sampler-pad @click=${this.handleClickPad} padName=${key} ?active=${this.activeKey === key}></sampler-pad>
+				<sampler-pad @pointerdown=${this.handleClickPad} padName=${key} ?active=${this.activeKey === key}></sampler-pad>
 				`)}
 			</nav>
 		`;

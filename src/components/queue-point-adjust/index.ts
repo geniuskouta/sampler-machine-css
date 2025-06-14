@@ -80,10 +80,23 @@ export class QueuePointAdjust extends LitElement {
 		}
 	}
 
+	handlePadPointerdown = (type: VideoEventType, detail: VideoEventDetail): void => {
+		if (type !== 'pad-pointerdown') return;
+		const playerKey = detail.trackName;
+		console.log(playerKey);
+		const queuePoints = this.videoPlayerController.getQueuePointsByPlayerKey(playerKey);
+		if (!queuePoints) return;
+		const lastQueueKey = this.videoPlayerController.getLastQueueKey();
+		if (!lastQueueKey) return;
+		this.updateQueuePointAdjustValue(queuePoints[lastQueueKey]);
+		this.updateQueuePointStyle(queuePoints[lastQueueKey]);
+	};
+
 	connectedCallback(): void {
 		super.connectedCallback();
 		KeyboardEventManager.subscribe(this.onKey);
 		VideoEventManager.subscribe(this.handleUpdateQueuePointAdjustMax);
+		VideoEventManager.subscribe(this.handlePadPointerdown);
 	}
 
 	disconnectedCallback(): void {
